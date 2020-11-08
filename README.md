@@ -19,3 +19,14 @@ Programming practice for Haskell
 > Tree.hs
 - postorder
 - inorder
+
+## Binary Search Tree
+> BST.hs
+- insert
+- member
+- delete
+- inorder
+- depth
+
+## N Queen Problem
+> NQueens.hs

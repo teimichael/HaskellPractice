@@ -58,4 +58,4 @@ tree :: Tree Int
 tree = Node (Node (Node Nil 0 Nil) 1 (Node (Node (Node Nil 2 Nil) 3 (Node Nil 4 Nil)) 5 Nil)) 6 (Node (Node Nil 7 Nil) 8 (Node Nil 9 Nil))
 
 outFunc :: IO ()
-outFunc = putStrLn $ show $ depth tree
+outFunc = putStrLn $ show $ delete 6 tree
