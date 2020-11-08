@@ -1,2 +1,8 @@
+import FPPractice
+import Tree
+
 main :: IO ()
-main = putStrLn "Test suite not yet implemented"
+main = do
+    putStrLn $ show $ power [1, 2]
+    Tree.outFunc
+    return ()
