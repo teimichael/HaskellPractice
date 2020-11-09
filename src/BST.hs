@@ -4,13 +4,6 @@ module BST
 
 data Tree a = Nil | Node (Tree a) a (Tree a) deriving Show
 
-insert :: (Ord a) => a -> Tree a -> Tree a
-insert v Nil = Node Nil v Nil
-insert v (Node l x r)
-      | v == x = error "Duplicate key"
-      | v < x = Node (insert v l) x r
-      | v > x = Node l x (insert v r)
-
 -- member :: (Eq a) => a -> Tree a -> Bool
 -- member v Nil = False
 -- member v (Node l y r)
@@ -23,6 +16,15 @@ member v (Node l x r)
       | v < x = member v l
       | v > x = member v r
 
+
+insert :: (Ord a) => a -> Tree a -> Tree a
+insert v Nil = Node Nil v Nil
+insert v (Node l x r)
+      | v == x = error "Duplicate key"
+      | v < x = Node (insert v l) x r
+      | v > x = Node l x (insert v r)
+
+
 delete :: Ord a => a -> Tree a -> Tree a
 delete _ Nil = Nil
 delete v (Node l x r)
@@ -30,17 +32,28 @@ delete v (Node l x r)
     | v > x = Node l x (delete v r)
 
 -- Node to be deleted is leaf: Simply remove from the tree. 
-delete _ (Node Nil x Nil) = Nil
+delete _ (Node Nil _ Nil) = Nil
 --  Node to be deleted has only one child: Copy the child to the node and delete the child 
-delete _ (Node Nil x r) = r
-delete _ (Node l x Nil) = l
--- Node to be deleted has two children: Find inorder successor of the node. Copy contents of the inorder successor (rightmost minimum) to the node and delete the inorder successor. Note that inorder predecessor can also be used.
-delete _ (Node l x r) = Node l rm r'
-    where   rm = rightMinimum r
+delete _ (Node Nil _ r) = r
+delete _ (Node l _ Nil) = l
+-- Node to be deleted has two children: Find inorder successor of the node. Copy contents of the inorder successor (rightmost minimum) to the node and delete the inorder successor.
+delete _ (Node l _ r) = Node l rm r'
+    where   rm = rightMin r
             r' = delete rm r
-            rightMinimum (Node Nil rm _) = rm
-            rightMinimum (Node l _ _) = rightMinimum l
 
+-- Inorder predecessor version
+-- delete _ (Node l _ r) = Node l' lm r
+--     where   lm = leftMax l
+--             l' = delete lm l
+
+
+rightMin :: Tree a -> a
+rightMin (Node Nil rm _) = rm
+rightMin (Node l _ _) = rightMin l
+
+leftMax :: Tree a -> a
+leftMax (Node _ lm Nil) = lm
+leftMax (Node _ _ r) = leftMax r
 
 
 inorder :: Tree a -> [a]
