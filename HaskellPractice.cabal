@@ -4,7 +4,7 @@ cabal-version: 1.12
 --
 -- see: https://github.com/sol/hpack
 --
--- hash: 37ec04122c322d952fea9d9af747cc83d7bbc60d0e65ab0662bbfd170f8e9164
+-- hash: a3808377140d3c95a0cf51e4e32e55e489b76526c0740308a4e56c8f4de99bd8
 
 name:           HaskellPractice
 version:        0.1.0.0
@@ -30,6 +30,7 @@ library
       BST
       FPPractice
       Lib
+      MagicSquare
       NQueens
       Tree
   other-modules:

@@ -30,3 +30,6 @@ Programming practice for Haskell
 
 ## N Queen Problem
 > NQueens.hs
+
+## Magic Square Problem (3 * 3)
+> MagicSquare.hs

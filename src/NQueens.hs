@@ -25,6 +25,7 @@ nqueen' n = [xs | xs <- permutations [0..n-1], ok xs]
           safe (x, y) (x', y') = (x /= x') && (y /= y') && ((abs (x - x')) /= (abs (y - y')))
           
 
+
 -- Solution 2
 queens :: Int -> [[Int]]
 queens n = filter (\x -> test (zip [1..n] x)) candidates

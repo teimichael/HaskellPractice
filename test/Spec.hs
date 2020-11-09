@@ -2,6 +2,7 @@ import FPPractice
 import Tree
 import BST
 import NQueens
+import MagicSquare
 
 main :: IO ()
 main = do
@@ -13,4 +14,6 @@ main = do
     BST.outFunc
     putStrLn "-- N Queen Problem --"
     NQueens.outFunc
+    putStrLn "-- Magic Square Problem --"
+    MagicSquare.outFunc
     return ()
