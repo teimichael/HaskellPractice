@@ -62,9 +62,11 @@ merge (x:xs) (y:ys)
 split :: [Int] -> ([Int], [Int])
 split [] = ([],[])
 split [x] = ([x], [])
-split (x:y:xs) = (firstHalf, secondHalf)
-    where firstHalf = x: fst (split xs)
-          secondHalf = y: snd (split xs)
+-- split (x:y:xs) = (firstHalf, secondHalf)
+--     where firstHalf = x: fst (split xs)
+--           secondHalf = y: snd (split xs)
+split (x:y:zs) = (x:xs, y:ys)
+    where (xs, ys) = split zs
 
 -- Merge sort
 msort :: [Int] -> [Int]
@@ -82,8 +84,8 @@ nub [] = []
 
 myUnzip :: [(a,b)] -> ([a], [b])
 myUnzip [] = ([], [])
-myUnzip ((a, b):xs) = (a : fst xs', b : snd xs')
-    where xs' = myUnzip xs
+myUnzip ((a, b):zs) = (a:xs, b:ys)
+    where (xs, ys) = myUnzip zs
 
 -- myUnzip [] = ([], []) 
 -- myUnzip xs = (map fst xs, map snd xs)
