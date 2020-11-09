@@ -20,6 +20,11 @@ Programming practice for Haskell
 - postorder
 - inorder
 
+## Programming Practice
+> Practice.hs
+- countString
+- rev
+
 ## Binary Search Tree
 > BST.hs
 - insert
