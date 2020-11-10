@@ -25,6 +25,30 @@ insert v (Node l x r)
       | v > x = Node l x (insert v r)
 
 
+-- Delete Tutorial (Provider: Abby)
+delete' :: Ord a => a -> Tree a -> Tree a
+delete' _ Nil = Nil
+-- Node to be deleted is leaf: Simply remove from the tree. 
+delete' x (Node Nil y Nil) 
+    | x == y = Nil
+    | otherwise = Node Nil y Nil
+-- Node to be deleted has only one child: Copy the child to the node and delete the child 
+delete' x (Node l y Nil) 
+    | x == y = l 
+    | x > y = Node l y Nil
+    | otherwise = Node (delete' x l) y Nil
+delete' x (Node Nil y r)
+    | x == y = r
+    | x < y  = Node Nil y r
+    | otherwise = Node Nil y (delete' x r)
+-- Node to be deleted has two children: Find inorder successor of the node. Copy contents of the inorder successor (rightmost minimum) to the node and delete the inorder successor.
+delete' x (Node l y r)
+    | x == y  = Node (delete' (leftMax l) l) (leftMax l) r
+    | x < y   = Node (delete' x l) y r
+    | otherwise = Node l y (delete' x r)
+
+
+-- Delete Solution
 delete :: Ord a => a -> Tree a -> Tree a
 delete _ Nil = Nil
 delete v (Node l x r)
@@ -33,7 +57,7 @@ delete v (Node l x r)
 
 -- Node to be deleted is leaf: Simply remove from the tree. 
 delete _ (Node Nil _ Nil) = Nil
---  Node to be deleted has only one child: Copy the child to the node and delete the child 
+-- Node to be deleted has only one child: Copy the child to the node and delete the child 
 delete _ (Node Nil _ r) = r
 delete _ (Node l _ Nil) = l
 -- Node to be deleted has two children: Find inorder successor of the node. Copy contents of the inorder successor (rightmost minimum) to the node and delete the inorder successor.
