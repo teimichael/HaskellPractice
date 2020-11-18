@@ -13,8 +13,8 @@ homepage:       https://github.com/teimichael/HaskellPractice
 bug-reports:    https://github.com/teimichael/HaskellPractice/issues
 author:         Michael Tei
 maintainer:     example@example.com
-copyright:      2020 Author name here
-license:        BSD3
+copyright:      2020 Tei Michael
+license:        MIT
 license-file:   LICENSE
 build-type:     Simple
 extra-source-files:
@@ -34,6 +34,7 @@ library
       NQueens
       Practice
       Tree
+      KillerSudoku.Main
   other-modules:
       Paths_HaskellPractice
   hs-source-dirs:

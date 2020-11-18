@@ -4,6 +4,7 @@ import Tree
 import BST
 import NQueens
 import MagicSquare
+import KillerSudoku.Main
 
 main :: IO ()
 main = do
@@ -19,4 +20,6 @@ main = do
     NQueens.outFunc
     putStrLn "-- Magic Square Problem --"
     MagicSquare.outFunc
+    putStrLn "-- Killer Sudoku Puzzle --"
+    KillerSudoku.Main.mainFunc
     return ()

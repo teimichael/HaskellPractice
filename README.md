@@ -38,3 +38,7 @@ Programming practice for Haskell
 
 ## Magic Square Problem (3 * 3)
 > MagicSquare.hs
+
+## Killer Sudoku Puzzle
+> KillerSudoku/Main.hs
+Generate a standard SMT-LIB program as the input of a solver (e.g. Z3) to solve Killer Sudoku Puzzle.
