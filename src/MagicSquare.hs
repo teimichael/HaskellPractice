@@ -12,35 +12,21 @@ sumIs15 :: [Int] -> Bool
 sumIs15 xs = sum xs == 15
 
 groupByRow :: [Int] -> [[Int]]
-groupByRow xs = [snd (unzip (filter (\x -> fst x `div` sideLength == n) (zip [0..(sideLength^2-1)] xs))) | n <- [0..sideLength - 1]]
--- groupByRow xs = loop 0
---     where   loop n  | n > sideLength - 1 = []
---                     | otherwise = (row n):(loop (n + 1))
---             row n = snd (unzip (filter (\x -> (fst x) `div` sideLength == n) (zip [0..(sideLength^2-1)] xs)))
+groupByRow xs = [ map snd (filter (\x -> fst x `div` sideLength == n) (zip [0..(sideLength^2-1)] xs)) | n <- [0..sideLength - 1]]
+
 
 groupByCol :: [Int] -> [[Int]]
-groupByCol xs = [snd (unzip (filter (\x -> fst x `mod` sideLength == n) (zip [0..(sideLength^2-1)] xs))) | n <- [0..sideLength - 1]]
--- groupByCol xs = loop 0
---     where   loop n  | n > sideLength - 1 = []
---                     | otherwise = (col n):(loop (n + 1))
---             col n = snd (unzip (filter (\x -> (fst x) `mod` sideLength == n) (zip [0..(sideLength^2-1)] xs)))
+groupByCol xs = [map snd (filter (\x -> fst x `mod` sideLength == n) (zip [0..(sideLength^2-1)] xs)) | n <- [0..sideLength - 1]]
 
 
 groupByMainDiag :: [Int] -> [[Int]]
--- groupByMainDiag xs = [diag, antidiag]
---     where   diag = findDiag 0
---             antidiag = findAntiAntidiag 0
---             findDiag n  | n > sideLength - 1 = []
---                         | otherwise = (xs!!(n * sideLength + n)):(findDiag (n + 1))
---             findAntiAntidiag n  | n > sideLength - 1 = []
---                                 | otherwise = ((xs!!((n+1) *sideLength - 1)):(findAntiAntidiag (n + 1)))
 groupByMainDiag xs = [diag, antidiag]
     where   (diag, antidiag) = findDiag 0
             findDiag n  | n > sideLength - 1 = ([], [])
                         | otherwise = ((xs!!(n * sideLength + n)):fst (findDiag (n + 1)), ((xs!!((n + 1) * 2)):snd (findDiag (n + 1))))
 
 ok :: [Int] -> Bool
-ok xs = all (\x -> sumIs15 x) (groupAll xs)
+ok xs = all sumIs15 (groupAll xs)
     where   groupAll xs = groupByCol xs ++ groupByRow xs ++ groupByMainDiag xs
 
 magicSquare :: [[Int]]
@@ -78,4 +64,4 @@ magicSquare2' = filter (test . matrix) candidates
             
 
 outFunc :: IO ()
-outFunc = putStrLn $ show $ length magicSquare2'
+outFunc = print $ length magicSquare2'
