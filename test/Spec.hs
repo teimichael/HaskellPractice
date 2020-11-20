@@ -21,5 +21,5 @@ main = do
     putStrLn "-- Magic Square Problem --"
     MagicSquare.outFunc
     putStrLn "-- Killer Sudoku Puzzle --"
-    KillerSudoku.Main.mainFunc
+    KillerSudoku.Main.testFunc
     return ()

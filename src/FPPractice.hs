@@ -34,8 +34,8 @@ range' m n
 insert :: Int -> [Int] -> [Int]
 insert x [] = [x]
 insert x (y:ys) =
-    let smaller = [a | a <- (y:ys), a <= x]
-        bigger  = [a | a <- (y:ys), a > x] 
+    let smaller = [a | a <- y:ys, a <= x]
+        bigger  = [a | a <- y:ys, a > x] 
     in  smaller ++ [x] ++ bigger
 
 isort :: [Int] -> [Int]

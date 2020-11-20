@@ -1,9 +1,10 @@
 module KillerSudoku.Main
-    ( mainFunc
+    ( consoleFunc,
+      testFunc
     ) where
 
--- import System.Environment
-import Data.List
+import System.Environment ( getArgs )
+import Data.List ( transpose )
 
 -- Define expression structure
 data Expr =
@@ -62,43 +63,48 @@ instance Show Command where
 
 -- Killer Sudoku Solver
 
-mainFunc :: IO ()
-mainFunc = do
-    -- Read cage file
-    -- args <- getArgs
-    -- Start processing to generate SMTLib file
-    -- process args
+testFunc :: IO ()
+testFunc = do
     process ["./src/KillerSudoku/cage_constraints"]
+
+consoleFunc :: IO ()
+consoleFunc = do
+    -- Read cage file
+    args <- getArgs
+    -- Start processing to generate SMTLib file
+    process args
 
 
 process :: [String] -> IO ()
 process [filename] = do
     -- Read cage contraints
     cageInput <- readFile filename
-    -- Declare variables
-    putStr declareVars
-    -- Assert constraints
-    putStrLn $ assertConstraints cageInput
-    -- Check commands
-    putStrLn check
+    putStrLn $ unlines $ map show (killerSudokuSolver cageInput)
 
+{-
+    Commands
+-}
+
+killerSudokuSolver :: String -> [Command]
+killerSudokuSolver cageInput = declareVars ++ [assertConstraints cageInput] ++ checkCommands
 
 -- Declare variables
-declareVars :: String
-declareVars = unlines $ map (show . Declare) $ concat vars
-
--- Generate constraints
-generate :: String -> [Formula]
-generate cageInput = digitConstraints ++ rowConstraints ++ colConstrains ++ gridConstraints ++ cageConstraints cageInput
+declareVars :: [Command]
+declareVars = map Declare (concat vars)
 
 -- Assert constraints
-assertConstraints :: String -> String
-assertConstraints cageInput = show (Assert (And (generate cageInput)))
+assertConstraints :: String -> Command
+assertConstraints cageInput = Assert (And generateConstraints)
+    where generateConstraints = digitConstraints ++ rowConstraints ++ colConstrains ++ gridConstraints ++ cageConstraints cageInput
 
 -- Check commands
-check :: String
-check = unlines $ map show [Check, GetVal $ concat vars]
+checkCommands :: [Command]
+checkCommands = [Check, GetVal $ concat vars]
 
+
+{-
+    Definitions
+-}
 
 -- Define length of the side
 sideLength :: Int
@@ -108,9 +114,18 @@ sideLength = 9
 gridLength :: Int
 gridLength = 3
 
+{-
+    Variables
+-}
+
 -- Create variables [[x11, x12, ...], [x21, x22, ...], ...]
 vars :: [[Expr]]
 vars = [[Var ("x" ++ show r ++ show c) | c <- [1..sideLength]] | r <- [1..sideLength]]
+
+
+{-
+    Constraints
+-}
 
 -- Digit constraints
 digitConstraints :: [Formula]
@@ -134,4 +149,3 @@ gridConstraints = [Distinct grid | grid <- grids]
 cageConstraints :: String -> [Formula]
 cageConstraints cageInput = [Eq (Val (read v)) (Plus (map (\x -> Var ("x" ++ x)) xs)) | (v:xs) <- cages]
     where cages = map words (lines cageInput)
-
